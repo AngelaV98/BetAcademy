@@ -44,3 +44,10 @@
     return n + 1;
   }
 }
+
+{
+  function isLeapYear(y) {
+    return new Date(y, 1, 29).getDate() === 29;
+  }
+  console.log(isLeapYear(2020));
+}
