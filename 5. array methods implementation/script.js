@@ -28,6 +28,8 @@ function emptyArray(arr) {
   // emptyArray(arr);
 }
 
+// Array methods
+
 // 2. Array map implementation
 function _map(arr, cb) {
   let newArr = [];
@@ -83,6 +85,7 @@ function _reduce(arr, cb, accumulator) {
   //   )
   // );
 }
+
 // 5. Array every implementation
 
 function _every(arr, cb) {
@@ -123,7 +126,6 @@ function _some(arr, cb) {
   // );
 }
 
-
 // 7. Array find implementation
 
 function _find(arr, cb) {
@@ -135,3 +137,84 @@ function _find(arr, cb) {
 }
 
 // console.log(_find([1, 2, 3, 4], elem => !(elem % 2)));
+
+// 8. Array sort implementation
+function _sort(arr,cb) {
+    for (let i = 0; i < arr.length; i++) {
+    let curMin = i;
+    for (let j = i + 1; j < arr.length; j++) {
+        if(cb===undefined){
+         if (`${arr[j]}` < `${arr[curMin]}`) {
+          let temp = arr[j];
+          arr[j] = arr[curMin];
+          arr[curMin] = temp;
+       }
+        }
+        else{
+            if(cb(`${arr[j]}`,`${arr[curMin]}`)<0){
+                  let temp = arr[j];
+                  arr[j] = arr[curMin];
+                  arr[curMin] = temp;
+            }
+        }
+    }
+  }
+  return arr;
+}
+console.log(_sort([1,2,5,16,8,3,7,1,6,4,3,7]));
+
+console.log(_sort([1,2,5,16,8,3,7,1,6,4,3,7],(a,b)=>a-b));
+
+// Sorting algorithms
+
+// 9. Bubble sort
+function _bubble(arr) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 0; j < arr.length - 1 - i; j++) {
+      if (arr[j] > arr[j + 1]) {
+        let temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
+    }
+  }
+
+  return arr;
+}
+console.log(_bubble([1, 6, 4, 3, 7]));
+
+// 10. Selection sort
+function _selection(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    let curMin = i;
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j] < arr[curMin]) {
+        let temp = arr[j];
+        arr[j] = arr[curMin];
+        arr[curMin] = temp;
+      }
+    }
+  }
+  return arr;
+}
+
+console.log(_selection([7, 2, 8, 12, 1, 2, 8, 5, 3, 9, 4, 1]));
+
+// 11. Insertion sort
+function _insertion(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    let j = i - 1;
+    while (j >= 0) {
+      if (arr[j] > arr[i]) {
+        let temp = arr[j];
+        arr[j] = arr[i];
+        arr[i] = temp;
+        i--;
+      }
+      j--;
+    }
+  }
+
+  return arr;
+}
+console.log(_insertion([1, 2, 5, 16, 8, 3, 7, 1, 6, 4, 3, 7]));
