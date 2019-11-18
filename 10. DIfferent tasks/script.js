@@ -1,25 +1,3 @@
-// Deep copy of object
-
-function deepCopy(obj) {
-  if (obj + "" === "null") {
-    return null;
-  }
-  let newObj = {};
-  for (let key in obj) {
-    if (typeof obj[key] !== "object") {
-      newObj[key] = obj[key];
-    } else {
-      newObj[key] = deepCopy(obj[key]);
-    }
-  }
-  return newObj;
-}
-
-const a = { a: "1", b: { a: 2 } };
-const b = deepCopy(a);
-
-console.log(b);
-
 // Create code that outputs all prime numbers from the given range (with “for”)
 function getPrimesInRange(a, b) {
   function isPrime(n) {
@@ -220,3 +198,25 @@ function printNumbersInterval() {
   }
 }
 console.log(printNumbersInterval());
+
+// Deep copy of object
+
+function deepCopy(obj) {
+  if (obj + "" === "null") {
+    return null;
+  }
+  let newObj = {};
+  for (let key in obj) {
+    if (typeof obj[key] !== "object") {
+      newObj[key] = obj[key];
+    } else {
+      newObj[key] = deepCopy(obj[key]);
+    }
+  }
+  return newObj;
+}
+
+const a = { a: "1", b: { a: 2 } };
+const b = deepCopy(a);
+
+console.log(b);
