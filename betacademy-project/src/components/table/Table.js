@@ -27,10 +27,10 @@ function Table({ list = [], fields }) {
               <tr key={id}>
                 {fields.map((item, i) => {
                   if (item.value === "id") {
-                    return <td key={item.value} />;
+                    return <td key={i} />;
                   }
                   return (
-                    <td key={item.value}>
+                    <td key={i}>
                       <span>{row[item.value]}</span>
                     </td>
                   );

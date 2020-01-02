@@ -1,6 +1,6 @@
 import React from "react";
 
-import Search from "../search/Search";
+import Search from "../search/";
 
 import logo from "../../assets/logo.png";
 import "./Header.css";
