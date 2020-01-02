@@ -5,11 +5,11 @@ import Search from "../search/";
 import logo from "../../assets/logo.png";
 import "./Header.css";
 
-function Header() {
+function Header({ onChange }) {
   return (
     <header className="Header">
       <img src={logo} className="Header-logo" alt="Logo" />
-      <Search />
+      <Search onChange={onChange} />
     </header>
   );
 }

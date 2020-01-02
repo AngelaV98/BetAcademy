@@ -11,6 +11,7 @@ import ErrorIndicator from "../error-indicator";
 class App extends Component {
   state = {
     currencies: [],
+    search: [],
     loading: true,
     isError: false
   };
@@ -18,7 +19,7 @@ class App extends Component {
     axios
       .get("https://api.udilia.com/coins/v1/cryptocurrencies?page=1&perPage=5")
       .then(({ data: { currencies } }) => {
-        this.setState({ currencies, loading: false });
+        this.setState({ currencies, search: currencies, loading: false });
       })
       .catch(err => {
         console.error(err);
@@ -29,18 +30,30 @@ class App extends Component {
     this.setState({ isError: true });
   }
 
+  handleChange = (text = "") => {
+    const { currencies } = this.state;
+    if (text === "") {
+      this.setState({ search: currencies });
+      return;
+    }
+    const newCurrencies = currencies.filter(({ name }) =>
+      name.toLowerCase().includes(text.toLowerCase())
+    );
+    this.setState({ search: newCurrencies });
+  };
   render() {
-    const { currencies, loading, isError } = this.state;
+    const { search, loading, isError } = this.state;
+
     return (
       <div className="App">
-        <Header />
+        <Header onChange={this.handleChange} />
         {loading ? (
           <Loading />
         ) : isError ? (
           <ErrorIndicator />
         ) : (
           <Table
-            list={currencies}
+            list={search}
             fields={[
               { title: "Cryptocurrency", value: "name" },
               { title: "Price", value: "price" },
