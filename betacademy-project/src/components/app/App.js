@@ -7,24 +7,44 @@ import Loading from "../loading/";
 
 import "./App.css";
 import ErrorIndicator from "../error-indicator";
+import Pagination from "../pagination/Pagination";
 
 class App extends Component {
   state = {
     currencies: [],
     search: [],
+    totalNumber: null ,
     loading: true,
-    isError: false
+    isError: false,
+    curPage: 1
   };
+  onPageChange = (e)=>{
+    this.setState({curPage:e.target.textContent});
+     e.target.style.backgroundColor = "#444"
+  }
   componentDidMount() {
+      this.getAllData()
+  }
+  componentDidUpdate(nextProps, nextState){
+    if(this.state.curPage !== nextState.curPage){
+      console.log(8)
+
+      this.getAllData()
+    }
+  }
+
+  getAllData = ()=>{
+    console.log(8)
     axios
-      .get("https://api.udilia.com/coins/v1/cryptocurrencies?page=1&perPage=5")
-      .then(({ data: { currencies } }) => {
-        this.setState({ currencies, search: currencies, loading: false });
-      })
-      .catch(err => {
-        console.error(err);
-        this.setState({ isError: true, loading: false });
-      });
+        .get(`https://api.udilia.com/coins/v1/cryptocurrencies?page=${this.state.curPage}&perPage=5`)
+        .then(({ data: { currencies,totalPages } }) => {
+          this.setState({ currencies, search: currencies,totalNumber:totalPages, loading: false });
+        })
+        .catch(err => {
+          console.error(err);
+          this.setState({ isError: true, loading: false });
+        });
+
   }
   componentDidCatch(error, errorInfo) {
     this.setState({ isError: true });
@@ -52,6 +72,7 @@ class App extends Component {
         ) : isError ? (
           <ErrorIndicator />
         ) : (
+          <div>
           <Table
             list={search}
             fields={[
@@ -61,6 +82,8 @@ class App extends Component {
               { title: "24HChange", value: "percentChange24h" }
             ]}
           />
+          <Pagination count={this.state.totalNumber} onPageChange = {this.onPageChange} />
+          </div>
         )}
       </div>
     );
